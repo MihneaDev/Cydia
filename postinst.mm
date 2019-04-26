@@ -258,12 +258,12 @@ int main(int argc, const char *argv[]) {
 
     #define Cytore_ "/metadata.cb0"
 
-    unlink("/etc/apt/sources.list.d/electra.list");
-    #define CYDIA_LIST "/etc/apt/sources.list.d/cydia.list"
+    unlink("/etc/apt/cydiasources.d/electra.list");
+    #define CYDIA_LIST "/etc/apt/cydiasources.d/cydia.list"
     unlink(CYDIA_LIST);
     if (kCFCoreFoundationVersionNumber >= 1443) {
         [[NSString stringWithFormat:@
-            "deb https://apt.bingner.com/ ios/%.2f main\n"
+            "deb https://diatr.us/apt/ ./\n"
             "deb http://apt.thebigboss.org/repofiles/cydia/ stable main\n"
             "deb http://cydia.zodttd.com/repo/cydia/ stable main\n"
             "deb http://apt.modmyi.com/ stable main\n"
@@ -273,7 +273,7 @@ int main(int argc, const char *argv[]) {
     } else {
         [[NSString stringWithFormat:@
             "deb http://apt.saurik.com/ ios/%.2f main\n"
-            "deb https://apt.bingner.com/ ./\n"
+            "deb https://diatr.us/apt/ ./\n"
             "deb http://apt.thebigboss.org/repofiles/cydia/ stable main\n"
             "deb http://cydia.zodttd.com/repo/cydia/ stable main\n"
             "deb http://apt.modmyi.com/ stable main\n"

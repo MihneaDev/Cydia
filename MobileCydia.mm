@@ -3630,7 +3630,7 @@ class CydiaLogCleaner :
     if (access("/etc/apt/sources.list", F_OK) == 0)
         error |= [self popErrorWithTitle:title forOperation:list.ReadAppend("/etc/apt/sources.list")];
 
-    std::string base("/etc/apt/sources.list.d");
+    std::string base("/etc/apt/cydiasources.d");
     if (DIR *sources = opendir(base.c_str())) {
         while (dirent *source = readdir(sources))
             if (source->d_name[0] != '.' && source->d_namlen > 5 && strcmp(source->d_name + source->d_namlen - 5, ".list") == 0 && strcmp(source->d_name, "cydia.list") != 0)
@@ -9460,7 +9460,7 @@ int main(int argc, char *argv[]) {
             _assert(errno == ENOENT);
     }
 
-    system("/usr/libexec/cydia/cydo /bin/ln -sf /var/mobile/Library/Caches/com.saurik.Cydia/sources.list /etc/apt/sources.list.d/cydia.list");
+    system("/usr/libexec/cydia/cydo /bin/ln -sf /var/mobile/Library/Caches/com.saurik.Cydia/sources.list /etc/apt/cydiasources.d/cydia.list");
 
     /* APT Initialization {{{ */
     _assert(pkgInitConfig(*_config));

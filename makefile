@@ -1,7 +1,7 @@
 .DELETE_ON_ERROR:
 .SECONDARY:
 
-dpkg := fakeroot dpkg-deb -Zlzma
+dpkg := fakeroot dpkg-deb
 version := $(shell ./version.sh)
 
 flag := 
@@ -16,7 +16,7 @@ sdk := $(shell xcodebuild -sdk iphoneos -version Path)
 cycc += -idirafter /usr/include
 cycc += -F$(sdk)/System/Library/PrivateFrameworks
 
-ARCHS := armv6 arm64
+ARCHS := arm64 arm64e
 cycc += $(foreach arch,$(ARCHS),-arch $(arch))
 
 ifeq ("$(findstring armv6,$(ARCHS))","armv6")
@@ -209,7 +209,7 @@ debs/cydia_$(version)_iphoneos-arm.deb: MobileCydia preinst postinst cfversion s
 	
 	mkdir -p _/etc/apt
 	cp -a Trusted.gpg _/etc/apt/trusted.gpg.d
-	cp -a Sources.list _/etc/apt/sources.list.d
+	cp -a Sources.list _/etc/apt/cydiasources.d
 	
 	mkdir -p _/usr/libexec
 	cp -a Library _/usr/libexec/cydia

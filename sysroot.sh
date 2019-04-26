@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ ${BASH_VERSION} != 4* ]]; then
-    echo "bash 4.0 required" 1>&2
+if [[ ${BASH_VERSION} != 5* ]]; then
+    echo "bash 5.0 required" 1>&2
     exit 1
 fi
 
@@ -18,8 +18,8 @@ for command in unlzma wget; do
     fi
 done
 
-if tar --help | grep bsdtar &>/dev/null; then
-    echo "Running \`tar\` is bsdtar :(. Please read compiling.txt." 1>&2
+if gtar --help | grep bsdtar &>/dev/null; then
+    echo "Running \`gtar\` is bsdtar :(. Please read compiling.txt." 1>&2
     exit 1
 fi
 
@@ -59,7 +59,7 @@ function extract() {
     fi
 
     ls -la data.tar
-    tar -xf ./data.tar
+    gtar -xf ./data.tar
     rm -f data.tar
 }
 
