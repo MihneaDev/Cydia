@@ -4,4 +4,6 @@
 3) activate Fink (. /sw/bin/init.sh)
 4) sudo fink install bash ldid sed tar wget xz
 5) run ./sysroot.sh and wait a bit
+5) run git submodule update --init and wait a bit
+5) run ./patchapt.sh and wait a bit
 6) type "make" to compile the executable
