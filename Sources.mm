@@ -48,7 +48,7 @@ void CydiaWriteSources() {
 
         NSDictionary *source([Sources_ objectForKey:key]);
         // Ignore it if main source is added again
-        if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us"])
+        if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us/apt"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us/apt"])
             continue;
 
         // Don't add Electra sources
@@ -75,7 +75,7 @@ void CydiaWriteSources() {
 
 void CydiaAddSource(NSDictionary *source) {
     // Ignore it if main source is added again
-    if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us"])
+    if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us/apt"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us/apt"])
         return;
 
     // Don't add Electra sources
