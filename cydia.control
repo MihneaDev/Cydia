@@ -1,7 +1,7 @@
 Package: cydia
 Priority: required
 Section: Packaging
-Maintainer: Jay Freeman (saurik) <saurik@saurik.com>
+Maintainer: Diatrus <me@diatr.us>
 Architecture: iphoneos-arm
 Version: 
 Replaces: bigboss, bigbossbetarepo, com.sosiphone.addcydia, cydia-sources, ispazio.net, modmyifone, saurik, ste, yellowsn0w.com, zodttd
@@ -9,9 +9,8 @@ Depends: apt7-lib | libapt, apt7-key | apt-key, cydia-lproj (>= 1.1.10), darwint
 Conflicts: bigboss, bigbossbetarepo, com.sosiphone.addcydia, cydia-sources, ispazio.net, modmyifone, ste, yellowsn0w.com, zodttd
 Pre-Depends: debianutils, dpkg (>= 1.14.25-8), firmware (>=5.0)
 Provides: bigbossbetarepo, cydia-sources
-Description: graphical iPhone front-end for APT
-Name: Cydia Installer
+Description: Required for Cydia/Sileo to work
+Name: Cydia Compatibility Layer
 Author: Jay Freeman (saurik) <saurik@saurik.com>
-Depiction: http://cydia.saurik.com/info/cydia/
 Icon: file:///Applications/Cydia.app/Icon-60.png
-Tag: purpose::uikit, cydia::essential, role::enduser
+Tag: cydia::essential

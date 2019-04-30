@@ -4,8 +4,10 @@ CydiaAppliance
 postinst
 _
 __
+___
 Cydia.deb
 Cydia_.deb
+Cydia__.deb
 debs
 .DS_Store
 *.o

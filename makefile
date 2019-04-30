@@ -3,6 +3,7 @@
 
 dpkg := fakeroot dpkg-deb
 version := $(shell ./version.sh)
+version_ := "2.0"
 
 flag := 
 plus :=
@@ -203,13 +204,13 @@ postinst: postinst.mm CyteKit/stringWithUTF8Bytes.mm CyteKit/stringWithUTF8Bytes
 	$(cycc) $(plus) -o $@ $(filter %.mm,$^) $(flag) $(link) -framework CoreFoundation -framework Foundation -framework UIKit
 	@ldid -T0 -Sgenent.xml $@
 
-debs/cydia_$(version)_iphoneos-arm.deb: MobileCydia preinst postinst cfversion setnsfpn cydo $(images) $(shell find MobileCydia.app) cydia.control Library/firmware.sh Library/move.sh Library/startup
+debs/cydia_$(version_)_iphoneos-arm.deb: cfversion setnsfpn cydo cydia.control Library/firmware.sh Library/move.sh
 	fakeroot rm -rf _
 	mkdir -p _/var/lib/cydia
 	
 	mkdir -p _/etc/apt
+	mkdir -p _/etc/apt/sources.list.d
 	cp -a Trusted.gpg _/etc/apt/trusted.gpg.d
-	cp -a Sources.list _/etc/apt/cydiasources.d
 	
 	mkdir -p _/usr/libexec
 	cp -a Library _/usr/libexec/cydia
@@ -219,24 +220,8 @@ debs/cydia_$(version)_iphoneos-arm.deb: MobileCydia preinst postinst cfversion s
 	
 	cp -a cydo _/usr/libexec/cydia
 	
-	mkdir -p _/Library
-	cp -a LaunchDaemons _/Library/LaunchDaemons
-	
-	mkdir -p _/Applications
-	cp -a MobileCydia.app _/Applications/Cydia.app
-	rm -rf _/Applications/Cydia.app/*.lproj
-	cp -a MobileCydia _/Applications/Cydia.app/Cydia
-	ln -s Cydia _/Applications/Cydia.app/store
-	
-	cd MobileCydia.app && find . -name '*.png' -exec cp -af ../Images/MobileCydia.app/{} ../_/Applications/Cydia.app/{} ';'
-	
-	mkdir -p _/Applications/Cydia.app/Sources
-	ln -s /usr/share/bigboss/icons/bigboss.png _/Applications/Cydia.app/Sources/apt.bigboss.us.com.png
-	ln -s /usr/share/bigboss/icons/planetiphones.png _/Applications/Cydia.app/Sections/"Planet-iPhones Mods.png"
-	
 	mkdir -p _/DEBIAN
-	./control.sh cydia.control _ >_/DEBIAN/control
-	cp -a preinst postinst triggers _/DEBIAN/
+	./control_.sh cydia.control _ >_/DEBIAN/control
 	
 	find _ -exec touch -t "$$(date -j -f "%s" +"%Y%m%d%H%M.%S" "$$(git show --format='format:%ct' | head -n 1)")" {} ';'
 	
@@ -245,9 +230,47 @@ debs/cydia_$(version)_iphoneos-arm.deb: MobileCydia preinst postinst cfversion s
 	fakeroot chmod 6755 _/usr/libexec/cydia/cydo
 	
 	mkdir -p debs
-	ln -sf debs/cydia_$(version)_iphoneos-arm.deb Cydia.deb
+	ln -sf debs/cydia_$(version_)_iphoneos-arm.deb Cydia.deb
 	$(dpkg) -b _ Cydia.deb
 	@echo "$$(stat -L -f "%z" Cydia.deb) $$(stat -f "%Y" Cydia.deb)"
+
+debs/cydia-dark_$(version)_iphoneos-arm.deb: MobileCydia preinst postinst $(images) $(shell find MobileCydia.app) cydia-dark.control Library_/startup
+	fakeroot rm -rf ___
+	
+	mkdir -p ___/usr/libexec
+	cp -a Library_ ___/usr/libexec/cydia
+
+	mkdir -p ___/etc/apt
+	cp -a Sources.list ___/etc/apt/cydiasources.d
+	
+	mkdir -p ___/Library
+	cp -a LaunchDaemons ___/Library/LaunchDaemons
+	
+	mkdir -p ___/Applications
+	cp -a MobileCydia.app ___/Applications/Cydia.app
+	rm -rf ___/Applications/Cydia.app/*.lproj
+	cp -a MobileCydia ___/Applications/Cydia.app/Cydia
+	ln -s Cydia ___/Applications/Cydia.app/store
+	
+	cd MobileCydia.app && find . -name '*.png' -exec cp -af ../Images/MobileCydia.app/{} ../___/Applications/Cydia.app/{} ';'
+	
+	mkdir -p ___/Applications/Cydia.app/Sources
+	ln -s /usr/share/bigboss/icons/bigboss.png ___/Applications/Cydia.app/Sources/apt.bigboss.us.com.png
+	ln -s /usr/share/bigboss/icons/planetiphones.png ___/Applications/Cydia.app/Sections/"Planet-iPhones Mods.png"
+	
+	mkdir -p ___/DEBIAN
+	./control.sh cydia-dark.control ___ >___/DEBIAN/control
+	cp -a preinst postinst triggers ___/DEBIAN/
+	
+	find ___ -exec touch -t "$$(date -j -f "%s" +"%Y%m%d%H%M.%S" "$$(git show --format='format:%ct' | head -n 1)")" {} ';'
+	
+	fakeroot chown -R 0 ___
+	fakeroot chgrp -R 0 ___
+	
+	mkdir -p debs
+	ln -sf debs/cydia-dark_$(version)_iphoneos-arm.deb Cydia-dark.deb
+	$(dpkg) -b ___ Cydia-dark.deb
+	@echo "$$(stat -L -f "%z" Cydia-dark.deb) $$(stat -f "%Y" Cydia-dark.deb)"
 
 $(lproj_deb): $(shell find MobileCydia.app -name '*.strings') cydia-lproj.control
 	fakeroot rm -rf __
@@ -266,6 +289,6 @@ $(lproj_deb): $(shell find MobileCydia.app -name '*.strings') cydia-lproj.contro
 	$(dpkg) -b __ Cydia_.deb
 	@echo "$$(stat -L -f "%z" Cydia_.deb) $$(stat -f "%Y" Cydia_.deb)"
 	
-package: debs/cydia_$(version)_iphoneos-arm.deb $(lproj_deb)
+package: debs/cydia_$(version_)_iphoneos-arm.deb $(lproj_deb) debs/cydia-dark_$(version)_iphoneos-arm.deb
 
 .PHONY: all clean package
