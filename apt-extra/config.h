@@ -36,7 +36,7 @@
 #define CACHE_DIR "/var/cache/apt"
 #define LOG_DIR "/var/log/apt"
 #define CONF_DIR "/etc/apt"
-#define LIBEXEC_DIR "/usr/lib/apt"
+#define LIBEXEC_DIR "/usr/lib/cydiapt"
 #define BIN_DIR "/usr/bin"
 
 #define ROOT_GROUP "wheel"
