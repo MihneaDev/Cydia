@@ -228,6 +228,8 @@ debs/cydia_$(version_)_iphoneos-arm.deb: cfversion setnsfpn cydo cydia.control L
 	fakeroot chown -R 0 _
 	fakeroot chgrp -R 0 _
 	fakeroot chmod 6755 _/usr/libexec/cydia/cydo
+
+	find _ -name '.DS_Store' -type f -delete
 	
 	mkdir -p debs
 	ln -sf debs/cydia_$(version_)_iphoneos-arm.deb Cydia.deb
@@ -266,6 +268,8 @@ debs/cydia-dark_$(version)_iphoneos-arm.deb: MobileCydia preinst postinst $(imag
 	
 	fakeroot chown -R 0 ___
 	fakeroot chgrp -R 0 ___
+
+	find ___ -name '.DS_Store' -type f -delete
 	
 	mkdir -p debs
 	ln -sf debs/cydia-dark_$(version)_iphoneos-arm.deb Cydia-dark.deb
@@ -283,6 +287,8 @@ $(lproj_deb): $(shell find MobileCydia.app -name '*.strings') cydia-lproj.contro
 	
 	fakeroot chown -R 0 __
 	fakeroot chgrp -R 0 __
+
+	find __ -name '.DS_Store' -type f -delete
 	
 	mkdir -p debs
 	ln -sf debs/cydia-lproj_$(version)_iphoneos-arm.deb Cydia_.deb
