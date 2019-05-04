@@ -204,7 +204,7 @@ postinst: postinst.mm CyteKit/stringWithUTF8Bytes.mm CyteKit/stringWithUTF8Bytes
 	$(cycc) $(plus) -o $@ $(filter %.mm,$^) $(flag) $(link) -framework CoreFoundation -framework Foundation -framework UIKit
 	@ldid -T0 -Sgenent.xml $@
 
-debs/cydia_$(version_)_iphoneos-arm.deb: cfversion setnsfpn cydo cydia.control Library/firmware.sh Library/move.sh
+debs/cydia_1_$(version_)_iphoneos-arm.deb: cfversion setnsfpn cydo cydia.control Library/firmware.sh Library/move.sh
 	fakeroot rm -rf _
 	mkdir -p _/var/lib/cydia
 	
@@ -295,6 +295,10 @@ $(lproj_deb): $(shell find MobileCydia.app -name '*.strings') cydia-lproj.contro
 	$(dpkg) -b __ Cydia_.deb
 	@echo "$$(stat -L -f "%z" Cydia_.deb) $$(stat -f "%Y" Cydia_.deb)"
 	
-package: debs/cydia_$(version_)_iphoneos-arm.deb $(lproj_deb) debs/cydia-dark_$(version)_iphoneos-arm.deb
+package: debs/cydia_1_$(version_)_iphoneos-arm.deb debs/cydia-dark_$(version)_iphoneos-arm.deb $(lproj_deb)
+
+base: debs/cydia_1_$(version_)_iphoneos-arm.deb
+
+dark: debs/cydia-dark_$(version)_iphoneos-arm.deb $(lproj_deb)
 
 .PHONY: all clean package
