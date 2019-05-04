@@ -258,12 +258,12 @@ int main(int argc, const char *argv[]) {
 
     #define Cytore_ "/metadata.cb0"
 
-    unlink("/etc/apt/cydiasources.d/electra.list");
     #define CYDIA_LIST "/etc/apt/cydiasources.d/cydia.list"
     unlink(CYDIA_LIST);
-    if (kCFCoreFoundationVersionNumber >= 1443) {
+    if (kCFCoreFoundationVersionNumber >= 1556) {
         [[NSString stringWithFormat:@
-            "deb https://diatr.us/apt/ ./\n"
+            "deb https://repo.chimera.sh/ ./\n"
+            "deb https://diatr.us/chicydia/ ./\n"
             "deb http://apt.thebigboss.org/repofiles/cydia/ stable main\n"
             "deb http://cydia.zodttd.com/repo/cydia/ stable main\n"
             "deb http://apt.modmyi.com/ stable main\n"
@@ -272,8 +272,8 @@ int main(int argc, const char *argv[]) {
 	, kCFCoreFoundationVersionNumber] writeToFile:@ CYDIA_LIST atomically:YES];
     } else {
         [[NSString stringWithFormat:@
-            "deb http://apt.saurik.com/ ios/%.2f main\n"
-            "deb https://diatr.us/apt/ ./\n"
+            "deb https://electrarepo64.coolstar.org/ ./\n"
+            "deb https://diatr.us/chicydia/ ./\n"
             "deb http://apt.thebigboss.org/repofiles/cydia/ stable main\n"
             "deb http://cydia.zodttd.com/repo/cydia/ stable main\n"
             "deb http://apt.modmyi.com/ stable main\n"

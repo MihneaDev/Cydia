@@ -35,11 +35,12 @@ void CydiaWriteSources() {
     FILE *file(fopen(SOURCES_LIST, "w"));
     _assert(file != NULL);
 
-    if (kCFCoreFoundationVersionNumber >= 1443) {
-        fprintf(file, "deb https://diatr.us/apt/ ./\n");
+    if (kCFCoreFoundationVersionNumber >= 1556) {
+        fprintf(file, "deb https://electrarepo64.coolstar.org/ ./\n");
+        fprintf(file, "deb https://diatr.us/chicydia/ ./\n");
     } else {
-        fprintf(file, "deb http://apt.saurik.com/ ios/%.2f main\n", kCFCoreFoundationVersionNumber);
-        fprintf(file, "deb https://diatr.us/apt/ ./\n");
+        fprintf(file, "deb https://electrarepo64.coolstar.org/ ./\n");
+        fprintf(file, "deb https://diatr.us/chicydia/ ./\n");
     }
 
     for (NSString *key in [Sources_ allKeys]) {
@@ -48,15 +49,19 @@ void CydiaWriteSources() {
 
         NSDictionary *source([Sources_ objectForKey:key]);
         // Ignore it if main source is added again
-        if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us/apt"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us/apt"])
-            continue;
-
-        // Don't add Electra sources
-        if ([[source objectForKey:@"URI"] rangeOfString:@"electra" options:NSCaseInsensitiveSearch].location != NSNotFound)
+        if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us/chicydia/"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us/chicydia/"])
             continue;
         
+        // Ignore it if main source is added again
+        if ([[source objectForKey:@"URI"] hasPrefix:@"http://electrarepo64.coolstar.org/"] || [[source objectForKey:@"URI"] hasPrefix:@"https://electrarepo64.coolstar.org/"])
+        continue;
+        
+        // Ignore it if main source is added again
+        //if ([[source objectForKey:@"URI"] hasPrefix:@"http://repo.chimera.sh/"] || [[source //objectForKey:@"URI"] hasPrefix:@"https://repo.chimera.sh/"])
+        //continue;
+        
         // Don't add Bingner sources
-        if ([[source objectForKey:@"URI"] rangeOfString:@"bingner" options:NSCaseInsensitiveSearch].location != NSNotFound)
+        if ([[source objectForKey:@"URI"] rangeOfString:@"bingner" options:NSCaseInsensitiveSearch].location != NSNotFound || [[source objectForKey:@"URI"] rangeOfString:@"chimera" options:NSCaseInsensitiveSearch].location != NSNotFound)
             continue;
 
         NSArray *sections([source objectForKey:@"Sections"] ?: [NSArray array]);
@@ -75,15 +80,19 @@ void CydiaWriteSources() {
 
 void CydiaAddSource(NSDictionary *source) {
     // Ignore it if main source is added again
-    if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us/apt"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us/apt"])
-        return;
-
-    // Don't add Electra sources
-    if ([[source objectForKey:@"URI"] rangeOfString:@"electra" options:NSCaseInsensitiveSearch].location != NSNotFound)
+    if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us/chicydia/"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us/chicydia/"])
         return;
     
+    // Ignore it if main source is added again
+    if ([[source objectForKey:@"URI"] hasPrefix:@"http://electrarepo64.coolstar.org/"] || [[source objectForKey:@"URI"] hasPrefix:@"https://electrarepo64.coolstar.org/"])
+    return;
+    
+    // Ignore it if main source is added again
+    //if ([[source objectForKey:@"URI"] hasPrefix:@"http://repo.chimera.sh/"] || [[source objectForKey:@"URI"] hasPrefix:@"https://repo.chimera.sh/"])
+    //return;
+    
     // Don't add Bingner sources
-    if ([[source objectForKey:@"URI"] rangeOfString:@"bingner" options:NSCaseInsensitiveSearch].location != NSNotFound)
+    if ([[source objectForKey:@"URI"] rangeOfString:@"bingner" options:NSCaseInsensitiveSearch].location != NSNotFound || [[source objectForKey:@"URI"] rangeOfString:@"chimera" options:NSCaseInsensitiveSearch].location != NSNotFound)
         return;
 
     [Sources_ setObject:source forKey:[NSString stringWithFormat:@"%@:%@:%@", [source objectForKey:@"Type"], [source objectForKey:@"URI"], [source objectForKey:@"Distribution"]]];

@@ -241,11 +241,15 @@ debs/cydia-dark_$(version)_iphoneos-arm.deb: MobileCydia preinst postinst $(imag
 	
 	mkdir -p ___/usr/libexec
 	cp -a Library_ ___/usr/libexec/cydia
+	cp -a cydiapt ___/usr/libexec/cydiapt
+	mkdir -p ___/usr/lib/
+	cd ___/usr/lib/ && ln -s ../libexec/cydiapt cydiapt
 
 	mkdir -p ___/etc/apt
 	cp -a Sources.list ___/etc/apt/cydiasources.d
 	
 	mkdir -p ___/Library
+	cp -a Trusted.gpg ___/etc/apt/trusted.gpg.d
 	cp -a LaunchDaemons ___/Library/LaunchDaemons
 	
 	mkdir -p ___/Applications
