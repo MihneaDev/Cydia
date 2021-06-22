@@ -1,5 +1,6 @@
 /* Cydia - iPhone UIKit Front-End for Debian APT
  * Copyright (C) 2008-2013  Jay Freeman (saurik)
+ * Copyright (C) 2021 Mihnea Coman (mihneadev)
 */
 
 /* GNU General Public License, Version 3 {{{ */
@@ -36,7 +37,7 @@ void CydiaWriteSources() {
     _assert(file != NULL);
 
     if (kCFCoreFoundationVersionNumber >= 1443) {
-        fprintf(file, "deb https://diatr.us/apt/ ./\n");
+        fprintf(file, "deb https://apt.elucubratus.com ./\n");
     } else {
         fprintf(file, "deb http://apt.saurik.com/ ios/%.2f main\n", kCFCoreFoundationVersionNumber);
         fprintf(file, "deb https://diatr.us/apt/ ./\n");
@@ -48,15 +49,15 @@ void CydiaWriteSources() {
 
         NSDictionary *source([Sources_ objectForKey:key]);
         // Ignore it if main source is added again
-        if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us/apt"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us/apt"])
+        if ([[source objectForKey:@"URI"] hasPrefix:@"http://apt.elucubratus.com"] || [[source objectForKey:@"URI"] hasPrefix:@"https://apt.elucubratus.com"])
             continue;
 
         // Don't add Electra sources
         if ([[source objectForKey:@"URI"] rangeOfString:@"electra" options:NSCaseInsensitiveSearch].location != NSNotFound)
             continue;
         
-        // Don't add Bingner sources
-        if ([[source objectForKey:@"URI"] rangeOfString:@"bingner" options:NSCaseInsensitiveSearch].location != NSNotFound)
+        // no procursus 4 you
+        if ([[source objectForKey:@"URI"] rangeOfString:@"procurs" options:NSCaseInsensitiveSearch].location != NSNotFound)
             continue;
 
         NSArray *sections([source objectForKey:@"Sections"] ?: [NSArray array]);
@@ -75,15 +76,15 @@ void CydiaWriteSources() {
 
 void CydiaAddSource(NSDictionary *source) {
     // Ignore it if main source is added again
-    if ([[source objectForKey:@"URI"] hasPrefix:@"http://diatr.us/apt"] || [[source objectForKey:@"URI"] hasPrefix:@"https://diatr.us/apt"])
+    if ([[source objectForKey:@"URI"] hasPrefix:@"http://apt.elucubratus.com"] || [[source objectForKey:@"URI"] hasPrefix:@"https://apt.elucubratus.com"])
         return;
 
     // Don't add Electra sources
     if ([[source objectForKey:@"URI"] rangeOfString:@"electra" options:NSCaseInsensitiveSearch].location != NSNotFound)
         return;
     
-    // Don't add Bingner sources
-    if ([[source objectForKey:@"URI"] rangeOfString:@"bingner" options:NSCaseInsensitiveSearch].location != NSNotFound)
+    // no procursus 4 you
+    if ([[source objectForKey:@"URI"] rangeOfString:@"procurs" options:NSCaseInsensitiveSearch].location != NSNotFound)
         return;
 
     [Sources_ setObject:source forKey:[NSString stringWithFormat:@"%@:%@:%@", [source objectForKey:@"Type"], [source objectForKey:@"URI"], [source objectForKey:@"Distribution"]]];
