@@ -1,4 +1,4 @@
-deb https://diatr.us/apt/ ./
+deb https://apt.elucubratus.com ./
 deb http://apt.thebigboss.org/repofiles/cydia/ stable main
 deb http://cydia.zodttd.com/repo/cydia/ stable main
 deb http://apt.modmyi.com/ stable main
